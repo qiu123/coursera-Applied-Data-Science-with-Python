@@ -32,13 +32,13 @@ from scipy.stats import ttest_ind
 # 
 # Each function in this assignment below is worth 10%, with the exception of ```run_ttest()```, which is worth 50%.
 
-# In[12]:
+# In[2]:
 
 # Use this dictionary to map state names to two letter acronyms
 states = {'OH': 'Ohio', 'KY': 'Kentucky', 'AS': 'American Samoa', 'NV': 'Nevada', 'WY': 'Wyoming', 'NA': 'National', 'AL': 'Alabama', 'MD': 'Maryland', 'AK': 'Alaska', 'UT': 'Utah', 'OR': 'Oregon', 'MT': 'Montana', 'IL': 'Illinois', 'TN': 'Tennessee', 'DC': 'District of Columbia', 'VT': 'Vermont', 'ID': 'Idaho', 'AR': 'Arkansas', 'ME': 'Maine', 'WA': 'Washington', 'HI': 'Hawaii', 'WI': 'Wisconsin', 'MI': 'Michigan', 'IN': 'Indiana', 'NJ': 'New Jersey', 'AZ': 'Arizona', 'GU': 'Guam', 'MS': 'Mississippi', 'PR': 'Puerto Rico', 'NC': 'North Carolina', 'TX': 'Texas', 'SD': 'South Dakota', 'MP': 'Northern Mariana Islands', 'IA': 'Iowa', 'MO': 'Missouri', 'CT': 'Connecticut', 'WV': 'West Virginia', 'SC': 'South Carolina', 'LA': 'Louisiana', 'KS': 'Kansas', 'NY': 'New York', 'NE': 'Nebraska', 'OK': 'Oklahoma', 'FL': 'Florida', 'CA': 'California', 'CO': 'Colorado', 'PA': 'Pennsylvania', 'DE': 'Delaware', 'NM': 'New Mexico', 'RI': 'Rhode Island', 'MN': 'Minnesota', 'VI': 'Virgin Islands', 'NH': 'New Hampshire', 'MA': 'Massachusetts', 'GA': 'Georgia', 'ND': 'North Dakota', 'VA': 'Virginia'}
 
 
-# In[7]:
+# In[3]:
 
 def get_list_of_university_towns():
     '''Returns a DataFrame of towns and the states they are in from the 
@@ -71,7 +71,7 @@ def get_list_of_university_towns():
     return df
 
 
-# In[8]:
+# In[4]:
 
 def get_recession_start():
     '''Returns the year and quarter of the recession start time as a 
@@ -86,7 +86,7 @@ def get_recession_start():
 get_recession_start()
 
 
-# In[9]:
+# In[5]:
 
 def get_recession_end():
     '''Returns the year and quarter of the recession end time as a 
@@ -103,7 +103,7 @@ def get_recession_end():
             return gdplev.iloc[i][0]
 
 
-# In[10]:
+# In[6]:
 
 def get_recession_bottom():
     '''Returns the year and quarter of the recession bottom time as a 
@@ -122,7 +122,7 @@ def get_recession_bottom():
     return gdplev.iloc[bottom_index]['Quarter']
 
 
-# In[22]:
+# In[7]:
 
 def new_col_names():
     #generating the new coloumns names 
@@ -164,7 +164,7 @@ def convert_housing_data_to_quarters():
     return data
 
 
-# In[29]:
+# In[8]:
 
 def run_ttest():
     '''First creates new data showing the decline or growth of housing prices
@@ -187,10 +187,10 @@ def run_ttest():
     data = convert_housing_data_to_quarters().copy()
     data = data.loc[:,'2008q3':'2009q2']
     data = data.reset_index()
-    def diff(row):
-        return row['2008q3'] - row['2009q2']
+    def price_ratio(row):
+        return (row['2008q3'] - row['2009q2'])/row['2008q3']
     
-    data['up&down'] = data.apply(diff,axis=1)
+    data['up&down'] = data.apply(price_ratio,axis=1)
     #uni data 
     
     uni_town = get_list_of_university_towns()['RegionName']
@@ -212,9 +212,8 @@ def run_ttest():
             return 'non-university town'
         else:
             return 'university town'
-    p_val = list(stats.ttest_ind(not_uni, is_uni))[1]
+    p_val = list(ttest_ind(not_uni, is_uni))[1]
     result = (True,p_val,better())
-    
     return result
 
 
