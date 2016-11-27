@@ -6,3 +6,6 @@ https://hub.coursera-notebooks.org/user/bxqmexxhiyhigckambavjo/notebooks/Week%20
 
 Week3
 https://hub.coursera-notebooks.org/user/bxqmexxhiyhigckambavjo/notebooks/Week%203.ipynb
+
+Week4
+https://hub.coursera-notebooks.org/user/bxqmexxhiyhigckambavjo/notebooks/Week%204.ipynb
